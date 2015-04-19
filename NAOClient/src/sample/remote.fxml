@@ -1,0 +1,155 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+
+
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.media.MediaView?>
+<GridPane fx:controller="sample.RemoteController"
+          stylesheets="/sample/remote.css"
+          xmlns:fx="http://javafx.com/fxml"
+          alignment="center"
+          hgap="10" vgap="10">
+
+    <rowConstraints>
+        <RowConstraints percentHeight="10.0"/>
+        <RowConstraints percentHeight="70.0"/>
+        <RowConstraints percentHeight="20.0"/>
+    </rowConstraints>
+
+    <!-- Head -->
+    <GridPane GridPane.rowIndex="0" styleClass="rich-blue-toolbar"
+              maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+              maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="80.0"/>
+            <ColumnConstraints percentWidth="20.0"/>
+        </columnConstraints>
+
+        <Button onAction="#disconnect"
+                GridPane.columnIndex="0" styleClass="rich-blue"
+                maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+                maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+            <graphic>
+                <ImageView layoutX="160" layoutY="100">
+                    <image>
+                        <Image url="@img/chore_robot_off.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button fx:id="closeButton" onAction="#closeWindow"
+                GridPane.columnIndex="1" styleClass="rich-blue"
+                maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+                maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+            <graphic>
+                <ImageView layoutX="160" layoutY="100" fitWidth="50" fitHeight="50">
+                    <image>
+                        <Image url="@img/switch_off.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </GridPane>
+
+    <!-- Body -->
+    <Pane GridPane.rowIndex="1"
+          maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+          maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+        <MediaView fx:id="mediaView" fitHeight="480.0" fitWidth="640.0"/>
+    </Pane>
+
+    <!-- Foot -->
+    <GridPane GridPane.rowIndex="2" styleClass="rich-blue-toolbar"
+              maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+              maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="30.0"/>
+            <ColumnConstraints percentWidth="10.0"/>
+            <ColumnConstraints percentWidth="20.0"/>
+            <ColumnConstraints percentWidth="10.0"/>
+            <ColumnConstraints percentWidth="30.0"/>
+        </columnConstraints>
+
+        <Button onAction="#goForward"
+                GridPane.rowIndex="0" GridPane.columnIndex="2" styleClass="bevel-grey"
+                maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+                maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+            <graphic>
+                <ImageView layoutX="160" layoutY="100" fitWidth="50" fitHeight="50">
+                    <image>
+                        <Image url="@img/arrow_up.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button onAction="#turnLeft"
+                GridPane.rowIndex="0" GridPane.columnIndex="1" styleClass="bevel-grey"
+                maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+                maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+            <graphic>
+                <ImageView layoutX="160" layoutY="100" fitWidth="50" fitHeight="50">
+                    <image>
+                        <Image url="@img/arrow_left.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button onAction="#turnRigth"
+                GridPane.rowIndex="0" GridPane.columnIndex="3" styleClass="bevel-grey"
+                maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+                maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+            <graphic>
+                <ImageView layoutX="160" layoutY="100" fitWidth="50" fitHeight="50">
+                    <image>
+                        <Image url="@img/arrow_right.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button onAction="#goBackward"
+                GridPane.rowIndex="1" GridPane.columnIndex="2" styleClass="bevel-grey"
+                maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+                maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+            <graphic>
+                <ImageView layoutX="160" layoutY="100" fitWidth="50" fitHeight="50">
+                    <image>
+                        <Image url="@img/arrow_down.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+
+        <Button onAction="#showCameraVision"
+                GridPane.rowIndex="1" GridPane.columnIndex="0" styleClass="bevel-grey"
+                maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+                maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+            <graphic>
+                <ImageView layoutX="160" layoutY="100" fitWidth="50" fitHeight="50">
+                    <image>
+                        <Image url="@img/camera.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Button onAction="#showSayForm"
+                GridPane.rowIndex="1" GridPane.columnIndex="4" styleClass="bevel-grey"
+                maxWidth="Infinity" GridPane.vgrow="ALWAYS"
+                maxHeight="Infinity" GridPane.hgrow="ALWAYS">
+            <graphic>
+                <ImageView layoutX="160" layoutY="100" fitWidth="50" fitHeight="50">
+                    <image>
+                        <Image url="@img/bubble_talk.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+    </GridPane>
+
+</GridPane>
