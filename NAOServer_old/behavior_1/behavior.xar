@@ -14,7 +14,7 @@
         <Timeline enable="0">
             <BehaviorLayer name="behavior_layer1">
                 <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram scale="70.7107">
+                    <Diagram scale="35.3553">
                         <Box name="Socket Listener" id="2" localization="8" tooltip='format: &quot;uid#command#param1#param2#…#paramN$&quot;&#x0A;&#x0A;EX : &quot;123#say#Hello World!$&quot;.' x="418" y="58">
                             <bitmap>media/images/box/box-python-script.png</bitmap>
                             <script language="4">
@@ -56,20 +56,20 @@ class MyClass(GeneratedClass):
             self.listenSocket=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
             self.listenSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             self.listenSocket.bind(("",self.port))
-            self.logger.info("1 connection allowed on port : "+str(self.port))
+            self.logger.info("1 connexion possible sur le port : "+str(self.port))
 
             # Waiting for the message on the opened port
             self.listenSocket.listen(1)
             self.connectedSocket,address=self.listenSocket.accept()
-            self.logger.info("Message sent on the IP address : "+str(address))
-            self.logger.info("Socket received : "+str(self.connectedSocket))
+            self.logger.info("Message envoye sur l adresse IP : "+str(address))
+            self.logger.info("Socket recue : "+str(self.connectedSocket))
 
             self.getOrder()
 
         except Exception as ex:
             self.logger.warn("Ouverture du port impossible.")
             self.logger.warn(ex)
-
+            self.onUnload()
         pass
 
     def getOrder(self):
@@ -91,7 +91,7 @@ class MyClass(GeneratedClass):
         except Exception as ex:
             self.logger.warn("Exception pendant l ecoute de la socket, fermeture de la connexion. ")
             self.logger.warn(ex)
-
+            self.onUnload()
         pass
 
     #===================================================================================
@@ -237,7 +237,7 @@ class MyClass(GeneratedClass):
                             <Output name="turnLeft" type="1" type_size="1" nature="2" inner="0" tooltip="" id="8" />
                             <Output name="turnRight" type="1" type_size="1" nature="2" inner="0" tooltip="" id="9" />
                         </Box>
-                        <Box name="Say Text" id="1" localization="8" tooltip="Say the text received on its input." x="939" y="112">
+                        <Box name="Say Text" id="1" localization="8" tooltip="Say the text received on its input." x="932" y="149">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -293,7 +293,7 @@ class MyClass(GeneratedClass):
                             <Parameter name="Speed (%)" inherits_from_parent="1" content_type="1" value="100" default_value="100" min="50" max="200" tooltip="Changes the speed of the voice.&#x0A;&#x0A;Note: For a better effect, you can compensate this parameter with the voice&#x0A;shaping parameter. For example, if you want to increase by 20% the speed, you&#x0A;will have to decrease by 20% the voice shaping to keep a constant average&#x0A;speed." id="6" />
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Sit Down" id="6" localization="8" tooltip="the robot tries to sit down from any position for a number of tries.&#x0A;&#x0A;Note: The number of tries can be set in parameters." x="1412" y="208">
+                        <Box name="Sit Down" id="6" localization="8" tooltip="the robot tries to sit down from any position for a number of tries.&#x0A;&#x0A;Note: The number of tries can be set in parameters." x="1076" y="196">
                             <bitmap>media/images/box/movement/sit_ground.png</bitmap>
                             <script language="4">
                                 <content>
@@ -365,7 +365,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="All motors" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Stand Up" id="7" localization="8" tooltip="the robot tries to stand up from any position for a number of tries.&#x0A;&#x0A;Note: The number of tries can be set in parameters." x="1274" y="257">
+                        <Box name="Stand Up" id="7" localization="8" tooltip="the robot tries to stand up from any position for a number of tries.&#x0A;&#x0A;Note: The number of tries can be set in parameters." x="1071" y="291">
                             <bitmap>media/images/box/movement/stand.png</bitmap>
                             <script language="4">
                                 <content>
@@ -444,7 +444,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="All motors" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Go Backward (1)" id="12" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="1008" y="444">
+                        <Box name="Go Backward (1)" id="12" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="1065" y="486">
                             <bitmap>media/images/box/movement/move.png</bitmap>
                             <script language="4">
                                 <content>
@@ -574,7 +574,7 @@ class MyClass(GeneratedClass):
                                 </BehaviorLayer>
                             </Timeline>
                         </Box>
-                        <Box name="Go Forward" id="13" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="1126" y="376">
+                        <Box name="Go Forward" id="13" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="1052" y="396">
                             <bitmap>media/images/box/movement/move.png</bitmap>
                             <script language="4">
                                 <content>
@@ -704,7 +704,7 @@ class MyClass(GeneratedClass):
                                 </BehaviorLayer>
                             </Timeline>
                         </Box>
-                        <Box name="Turn Left" id="14" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="1094" y="558">
+                        <Box name="Turn Left" id="14" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="1087" y="589">
                             <bitmap>media/images/box/movement/move.png</bitmap>
                             <script language="4">
                                 <content>
@@ -834,7 +834,7 @@ class MyClass(GeneratedClass):
                                 </BehaviorLayer>
                             </Timeline>
                         </Box>
-                        <Box name="Turn Right" id="15" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="992" y="640">
+                        <Box name="Turn Right" id="15" localization="8" tooltip="This box is empty (contains a single motion layer with no motor position&#x0A;defined in it) and should be used to create any animation you would like." x="1084" y="707">
                             <bitmap>media/images/box/movement/move.png</bitmap>
                             <script language="4">
                                 <content>
@@ -976,6 +976,15 @@ class MyClass(GeneratedClass):
                         <Link inputowner="12" indexofinput="2" outputowner="5" indexofoutput="7" />
                         <Link inputowner="14" indexofinput="2" outputowner="5" indexofoutput="8" />
                         <Link inputowner="15" indexofinput="2" outputowner="5" indexofoutput="9" />
+                        <Link inputowner="4" indexofinput="2" outputowner="1" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="6" indexofoutput="5" />
+                        <Link inputowner="4" indexofinput="2" outputowner="7" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="7" indexofoutput="5" />
+                        <Link inputowner="4" indexofinput="2" outputowner="13" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="12" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="14" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="15" indexofoutput="4" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>
