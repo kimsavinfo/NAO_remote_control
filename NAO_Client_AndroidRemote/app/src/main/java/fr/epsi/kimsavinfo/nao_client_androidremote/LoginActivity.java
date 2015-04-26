@@ -3,6 +3,7 @@ package fr.epsi.kimsavinfo.nao_client_androidremote;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,14 +15,14 @@ import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends Activity
 {
-    private SendSocketTask sendSocketTask;
+    private ConnectToNAOTask naoConnectionTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sendSocketTask = new SendSocketTask();
+        naoConnectionTask = new ConnectToNAOTask();
     }
 
     public void connection(View view) throws ExecutionException, InterruptedException
@@ -32,15 +33,27 @@ public class LoginActivity extends Activity
         NAO_SocketManager orderManager = new NAO_SocketManager(ipAdress, port);
 
         // Socket can only be send in another thread, not in the main
-        sendSocketTask.execute(orderManager);
-        boolean isTaskExecuted = sendSocketTask.get();
-        if(isTaskExecuted)
-        {
+        // naoConnectionTask.execute(orderManager);
+        // boolean isTaskExecuted = naoConnectionTask.get();
 
+
+        if(true)
+        {
+            Intent intent = new Intent(LoginActivity.this, RemoteActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("ipAdress", ipAdress);
+            bundle.putInt("port", port);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
         }
     }
 
-    private class SendSocketTask extends AsyncTask<NAO_SocketManager, Void, Boolean>
+    /* ===========================================================================
+    * Send connection socket to NAO via a new thread
+    ===========================================================================*/
+
+    private class ConnectToNAOTask extends AsyncTask<NAO_SocketManager, Void, Boolean>
     {
         private ProgressDialog progressDialog;
         private Boolean succeed;
@@ -50,7 +63,7 @@ public class LoginActivity extends Activity
         {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(LoginActivity.this,
-                    "Please wait", "Sending information to NAO",
+                    "Please wait", "Connecting to NAO",
                     true, false);
         }
 
