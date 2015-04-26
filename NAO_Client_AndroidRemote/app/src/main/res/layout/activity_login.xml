@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".LoginActivity"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:layout_marginBottom="20dip"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/IP_address_label"
+            android:text="@string/IP_address_label"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/IP_address_input"
+            android:text="@string/IP_address_input"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:orientation="horizontal"
+        android:gravity="top"
+        android:layout_marginTop="20dip"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/port_label"
+            android:text="@string/port_label"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_weight="1" />
+
+        <EditText
+            android:id="@+id/port_input"
+            android:text="@string/port_input"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:ems="10"
+            android:layout_weight="2"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/login_button"
+
+            android:text="@string/login_button"
+            android:onClick="connection"
+            android:drawableLeft="@drawable/nao_connection_green"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
