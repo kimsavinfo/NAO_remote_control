@@ -14,14 +14,14 @@ import fr.epsi.kimsavinfo.nao_client_androidremote.Lib_ID.IDManager;
 /**
  * Created by kimsavinfo on 26/04/15.
  */
-public class NAO_SocketFactory
+public class NAO_SocketManager
 {
     String ipAddress;
     int port;
     String uid;
     Socket socket;
 
-    public NAO_SocketFactory(String _ipAdresse, int _port)
+    public NAO_SocketManager(String _ipAdresse, int _port)
     {
         ipAddress = _ipAdresse;
         port = _port;
