@@ -1,24 +1,30 @@
 package fr.epsi.kimsavinfo.nao_client_androidremote;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
-public class LoginActivity extends ActionBarActivity
+import java.util.concurrent.ExecutionException;
+
+public class LoginActivity extends Activity
 {
+    private SendSocketTask sendSocketTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sendSocketTask = new SendSocketTask();
     }
 
-    public void connection(View view)
+    public void connection(View view) throws ExecutionException, InterruptedException
     {
         // Set the socket for NAO
         String ipAdress = ((EditText)findViewById(R.id.IP_address_input)).getText().toString();
@@ -26,12 +32,18 @@ public class LoginActivity extends ActionBarActivity
         NAO_SocketManager orderManager = new NAO_SocketManager(ipAdress, port);
 
         // Socket can only be send in another thread, not in the main
-        new SendSocketTask().execute(orderManager);
+        sendSocketTask.execute(orderManager);
+        boolean isTaskExecuted = sendSocketTask.get();
+        if(isTaskExecuted)
+        {
+
+        }
     }
 
-    private class SendSocketTask extends AsyncTask<NAO_SocketManager, Void, Void>
+    private class SendSocketTask extends AsyncTask<NAO_SocketManager, Void, Boolean>
     {
         private ProgressDialog progressDialog;
+        private Boolean succeed;
 
         @Override
         protected void onPreExecute()
@@ -43,31 +55,37 @@ public class LoginActivity extends ActionBarActivity
         }
 
         @Override
-        protected void onPostExecute(Void aVoid)
+        protected void onPostExecute(Boolean _succeed)
         {
-            super.onPostExecute(aVoid);
+            super.onPostExecute(_succeed);
             progressDialog.dismiss();
         }
 
         @Override
-        protected Void doInBackground(NAO_SocketManager... orderManager)
+        protected Boolean doInBackground(NAO_SocketManager... orderManager)
         {
+            succeed = false;
+
             try
             {
-                Thread.sleep(1000);
+                succeed = orderManager[0].sendOrder("say", "Bonjour, je vous écoute.");
 
-                /*
-                if(orderManager.sendOrder("goodbye", ""))
-                    Log.d("orderManager", "OK");
-                else
-                    Log.d("orderManager", "KO");
-                */
+                if(!succeed)
+                {
+                    Context context = getApplicationContext();
+                    CharSequence text = "Connection not found";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
             catch (Exception e)
             {
                 Log.e("SendSocketTask - doInBackground ", e.toString());
             }
-            return null;
+
+            return succeed;
         }
     }
 }

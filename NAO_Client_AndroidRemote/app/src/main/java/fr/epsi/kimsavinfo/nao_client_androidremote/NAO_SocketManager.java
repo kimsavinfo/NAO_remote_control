@@ -40,7 +40,7 @@ public class NAO_SocketManager
             OutputStreamWriter osw = new OutputStreamWriter(os);
             BufferedWriter bw = new BufferedWriter(osw);
 
-            String sendMessage = uid+"#"+_order+"#"+_parameters;
+            String sendMessage = uid+"#"+_order+"#"+_parameters+"$";
             Log.d("Message envoye au serveur : ", sendMessage);
 
             bw.write(sendMessage);
