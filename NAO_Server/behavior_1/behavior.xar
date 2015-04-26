@@ -92,30 +92,24 @@ class MyClass(GeneratedClass):
         GeneratedClass.__init__(self)
 
     def onLoad(self):
-
-        pass
-
-    def onUnload(self):
-        #put clean-up code here
         pass
 
     def onInput_onStart(self):
-        # Set l adresse et le port
+        # Set l adresse IP et le port
         self.HOST="" # prend l adresse IP de la machine par défaut
         self.PORT=1234
-
         # New socket
-        socketOrder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        socketOrder.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        socketOrder.bind((self.HOST, self.PORT))
-        socketOrder.listen(1)
-        connectionOrder, self.HOST = socketOrder.accept()
-        self.logger.info("Connexion possible :"+str(connectionOrder)+":"+str(self.PORT))
+        self.socketOrder = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socketOrder.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socketOrder.bind((self.HOST, self.PORT))
+        self.socketOrder.listen(1)
+        self.connectionOrder, self.HOST = self.socketOrder.accept()
+        self.logger.info("Connexion possible :"+str(self.connectionOrder)+":"+str(self.PORT))
 
         # Get socket message : UID, order, params
         total_data=""
         while 1:
-            data = connectionOrder.recv(1)
+            data = self.connectionOrder.recv(1)
             if not data:
                 break
             else:
@@ -125,12 +119,14 @@ class MyClass(GeneratedClass):
                     if len(total_data)<255:  # limite du data buffer
                         total_data+=data
 
-        # Destructeur pour recommencer l'écoute
-        socketOrder.close()
-        connectionOrder.shutdown(socket.SHUT_WR)
-        connectionOrder.close()
-
         self.onStopped(p) #activate the output of the box
+        pass
+
+    def onUnload(self):
+        # Destructeur pour recommencer l'écoute
+        self.socketOrder.close()
+        self.connectionOrder.shutdown(socket.SHUT_WR)
+        self.connectionOrder.close()
         pass
 
     def onInput_onStop(self):
@@ -262,7 +258,7 @@ class MyClass(GeneratedClass):
         # Recuperer :
         # UID = l id de l emetteur
         # Order = action que NAO effectuera
-        # parametre = optionnel selon l Oder
+        # parameters = optionnel selon l Osder
         self.logger.info("UID :"+p[0]+", Order : "+p[1])
         uid=p[0]
         order=p[1]
