@@ -8,6 +8,11 @@
     <string name="IP_address_input">192.168.1.29</string>
     <string name="port_label">Port :</string>
     <string name="port_input">1234</string>
-    <string name="login_button">"Connection"</string>
+    <string name="login_button">Log in</string>
+    <string name="logout_button">Log out</string>
+    <string name="text_to_say">Hello world</string>
+    <string name="say_button">Say</string>
+    <string name="sit_ground_button">Sit down</string>
+    <string name="stand_up_button">Stand up</string>
 
 </resources>

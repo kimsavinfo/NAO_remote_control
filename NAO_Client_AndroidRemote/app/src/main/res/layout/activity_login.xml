@@ -77,10 +77,9 @@
 
         <Button
             android:id="@+id/login_button"
-
             android:text="@string/login_button"
-            android:onClick="connection"
-            android:drawableLeft="@drawable/nao_connection_green"
+            android:onClick="login"
+            android:drawableLeft="@drawable/robot_on"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center_vertical" />

@@ -15,17 +15,14 @@ import java.util.concurrent.ExecutionException;
 
 public class LoginActivity extends Activity
 {
-    private ConnectToNAOTask naoConnectionTask;
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        naoConnectionTask = new ConnectToNAOTask();
     }
 
-    public void connection(View view) throws ExecutionException, InterruptedException
+    public void login(View view) throws ExecutionException, InterruptedException
     {
         // Set the socket for NAO
         String ipAdress = ((EditText)findViewById(R.id.IP_address_input)).getText().toString();
@@ -33,11 +30,9 @@ public class LoginActivity extends Activity
         NAO_SocketManager orderManager = new NAO_SocketManager(ipAdress, port);
 
         // Socket can only be send in another thread, not in the main
-        // naoConnectionTask.execute(orderManager);
-        // boolean isTaskExecuted = naoConnectionTask.get();
-
-
-        if(true)
+        LoginTask naoConnectionTask = new LoginTask();
+        naoConnectionTask.execute(orderManager);
+        if(naoConnectionTask.get())
         {
             Intent intent = new Intent(LoginActivity.this, RemoteActivity.class);
             Bundle bundle = new Bundle();
@@ -47,13 +42,22 @@ public class LoginActivity extends Activity
             startActivity(intent);
             finish();
         }
+        else
+        {
+            Context context = getApplicationContext();
+            CharSequence text = "Connection not found";
+            int duration = Toast.LENGTH_SHORT;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
     }
 
     /* ===========================================================================
-    * Send connection socket to NAO via a new thread
+    * Send login socket to NAO via a new thread
     ===========================================================================*/
 
-    private class ConnectToNAOTask extends AsyncTask<NAO_SocketManager, Void, Boolean>
+    private class LoginTask extends AsyncTask<NAO_SocketManager, Void, Boolean>
     {
         private ProgressDialog progressDialog;
         private Boolean succeed;
@@ -82,20 +86,10 @@ public class LoginActivity extends Activity
             try
             {
                 succeed = orderManager[0].sendOrder("say", "Bonjour, je vous écoute.");
-
-                if(!succeed)
-                {
-                    Context context = getApplicationContext();
-                    CharSequence text = "Connection not found";
-                    int duration = Toast.LENGTH_SHORT;
-
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
             }
             catch (Exception e)
             {
-                Log.e("SendSocketTask - doInBackground ", e.toString());
+                Log.e("ConnectToNAOTask - doInBackground ", e.toString());
             }
 
             return succeed;
