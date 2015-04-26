@@ -38,7 +38,7 @@
 
         <Button
             android:id="@+id/say_button"
-            android:onClick=""
+            android:onClick="say"
             android:drawableLeft="@drawable/say"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
         <Button
             android:id="@+id/sit_ground_button"
             android:text="@string/sit_ground_button"
-            android:onClick=""
+            android:onClick="sitDown"
             android:drawableLeft="@drawable/sit_ground"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         <Button
             android:id="@+id/stand_up_button"
             android:text="@string/stand_up_button"
-            android:onClick=""
+            android:onClick="standUp"
             android:drawableRight="@drawable/stand"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
 
         <Button
             android:id="@+id/go_forward_left_button"
-            android:onClick=""
+            android:onClick="walkForwardLeft"
             android:background="@drawable/arrow_up_left"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
 
         <Button
             android:id="@+id/go_forward_button"
-            android:onClick=""
+            android:onClick="walkForward"
             android:background="@drawable/arrow_up"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
 
         <Button
             android:id="@+id/go_forward_right_button"
-            android:onClick=""
+            android:onClick="walkForwardRight"
             android:background="@drawable/arrow_up_right"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
 
         <Button
             android:id="@+id/go_left_button"
-            android:onClick=""
+            android:onClick="stepLeft"
             android:background="@drawable/arrow_left"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
 
         <Button
             android:id="@+id/turn_left_button"
-            android:onClick=""
+            android:onClick="turnLeft"
             android:background="@drawable/arrow_left_down"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
 
         <Button
             android:id="@+id/turn_right_button"
-            android:onClick=""
+            android:onClick="turnRight"
             android:background="@drawable/arrow_right_down"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
 
         <Button
             android:id="@+id/go_right_button"
-            android:onClick=""
+            android:onClick="stepRight"
             android:background="@drawable/arrow_right"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
 
         <Button
             android:id="@+id/go_down_left_button"
-            android:onClick=""
+            android:onClick="walkBackwardLeft"
             android:background="@drawable/arrow_down_left"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
 
         <Button
             android:id="@+id/go_down_button"
-            android:onClick=""
+            android:onClick="walkBackward"
             android:background="@drawable/arrow_down"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
 
         <Button
             android:id="@+id/go_down_right_button"
-            android:onClick=""
+            android:onClick="walkBackwardRight"
             android:background="@drawable/arrow_down_right"
             android:layout_width="0dip"
             android:layout_height="wrap_content"

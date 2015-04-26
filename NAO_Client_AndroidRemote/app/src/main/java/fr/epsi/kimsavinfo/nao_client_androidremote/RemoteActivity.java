@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.concurrent.ExecutionException;
@@ -66,6 +67,97 @@ public class RemoteActivity extends Activity
     {
         order = "goodbye";
         orderParameters = "";
+        sendOrder();
+    }
+
+    public void say(View view) throws ExecutionException, InterruptedException
+    {
+        order = "say";
+        orderParameters = ((EditText)findViewById(R.id.text_to_say)).getText().toString();
+        sendOrder();
+    }
+
+    public void sitDown(View view) throws ExecutionException, InterruptedException
+    {
+        order = "sitDown";
+        orderParameters = "";
+        sendOrder();
+    }
+
+    public void standUp(View view) throws ExecutionException, InterruptedException
+    {
+        order = "standUp";
+        orderParameters = "";
+        sendOrder();
+    }
+
+    public void walkForwardLeft(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "0.1#0.0#10";
+        sendOrder();
+    }
+
+    public void walkForward(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "0.1#0.0#0.0";
+        sendOrder();
+    }
+
+    public void walkForwardRight(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "0.1#0.0#-10";
+        sendOrder();
+    }
+
+    public void stepLeft(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "0.0#0.1#0.0";
+        sendOrder();
+    }
+
+    public void stepRight(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "0.0#-0.1#0.0";
+        sendOrder();
+    }
+
+    public void turnLeft(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "0.0#0.0#10";
+        sendOrder();
+    }
+
+    public void turnRight(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "0.0#0.0#-10";
+        sendOrder();
+    }
+
+    public void walkBackwardLeft(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "-0.1#0.0#10";
+        sendOrder();
+    }
+
+    public void walkBackward(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "-0.1#0.0#0.0";
+        sendOrder();
+    }
+
+    public void walkBackwardRight(View view) throws ExecutionException, InterruptedException
+    {
+        order = "walk";
+        orderParameters = "-0.1#0.0#-10";
         sendOrder();
     }
 
