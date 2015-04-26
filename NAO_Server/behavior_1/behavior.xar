@@ -263,17 +263,20 @@ class MyClass(GeneratedClass):
         # UID = l id de l emetteur
         # Order = action que NAO effectuera
         # parametre = optionnel selon l Oder
-        self.logger.info("UID :"+p[0]+", Order : "+p[1]+", Param :"+p[2])
+        self.logger.info("UID :"+p[0]+", Order : "+p[1])
         uid=p[0]
         order=p[1]
 
         if order=="say":
+            self.logger.info("Param :"+p[2])
             self.sayText(p[2])
         if order=="sitDown":
             self.sitDown()
         if order=="standUp":
             self.standUp()
-
+        if order=="walk":
+            self.logger.info("Param :"+p[2]+", "+p[3]+", "+p[4])
+            self.walk( [ float(p[2]), float(p[3]), float(p[4]) ] )
 
         # Stopper l ecoute
         if order=="goodbye":
@@ -293,6 +296,7 @@ class MyClass(GeneratedClass):
                             <Output name="sitDown" type="1" type_size="1" nature="2" inner="0" tooltip="NAO will sit down" id="5" />
                             <Output name="standUp" type="1" type_size="1" nature="2" inner="0" tooltip="" id="6" />
                             <Output name="goodbye" type="1" type_size="1" nature="2" inner="0" tooltip="" id="7" />
+                            <Output name="walk" type="2" type_size="1" nature="2" inner="0" tooltip="" id="8" />
                         </Box>
                         <Box name="Sit Down" id="7" localization="8" tooltip="the robot tries to sit down from any position for a number of tries.&#x0A;&#x0A;Note: The number of tries can be set in parameters." x="441" y="188">
                             <bitmap>media/images/box/movement/sit_ground.png</bitmap>
@@ -445,7 +449,7 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="All motors" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="Goodbye" id="9" localization="8" tooltip="Say goodbye to the user" x="378" y="500">
+                        <Box name="Goodbye" id="9" localization="8" tooltip="Say goodbye to the user" x="436" y="443">
                             <bitmap>media/images/box/interaction/say.png</bitmap>
                             <script language="4">
                                 <content>
@@ -655,6 +659,80 @@ class MyClass(GeneratedClass):
                             </Timeline>
                             <Resource name="Speech" type="Lock" timeout="0" />
                         </Box>
+                        <Box name="Move To" id="11" localization="8" tooltip="Make the robot move to a configured point relative to its current location." x="419" y="573">
+                            <bitmap>media/images/box/movement/walk_forward.png</bitmap>
+                            <script language="4">
+                                <content>
+                                    <![CDATA[
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self, False)
+        self.motion = ALProxy("ALMotion")
+        self.positionErrorThresholdPos = 0.01
+        self.positionErrorThresholdAng = 0.03
+
+    def onLoad(self):
+        pass
+
+    def onUnload(self):
+        self.motion.moveToward(0.0, 0.0, 0.0)
+
+    def onInput_onStart(self, coordinates):
+        import almath
+        # Set parmetres passes avec l ordre
+        self.logger.info("Coordinates :"+str(coordinates))
+
+        try:
+            distanceX = coordinates[0] # distance X en metres
+        except DistanceXError:
+            distanceX = 0
+
+        try:
+            distanceY = coordinates[1] # distance Y en metres
+        except DistanceYError:
+            distanceY = 0
+
+        try:
+            theta = coordinates[2] # angle en degres
+        except ThetaError:
+            theta = 0
+
+
+        # The command position estimation will be set to the sensor position
+        # when the robot starts moving, so we use sensors first and commands later.
+        initPosition = almath.Pose2D(self.motion.getRobotPosition(True))
+        targetDistance = almath.Pose2D(distanceX, distanceY, theta * almath.PI / 180)
+        expectedEndPosition = initPosition * targetDistance
+        enableArms = self.getParameter("Arms movement enabled")
+        self.motion.setMoveArmsEnabled(enableArms, enableArms)
+        self.motion.moveTo(distanceX, distanceY, theta * almath.PI / 180)
+
+        # The move is finished so output
+        realEndPosition = almath.Pose2D(self.motion.getRobotPosition(False))
+        positionError = realEndPosition.diff(expectedEndPosition)
+        positionError.theta = almath.modulo2PI(positionError.theta)
+        if (abs(positionError.x) < self.positionErrorThresholdPos
+            and abs(positionError.y) < self.positionErrorThresholdPos
+            and abs(positionError.theta) < self.positionErrorThresholdAng):
+            self.onArrivedAtDestination()
+        else:
+            self.onStoppedBeforeArriving(positionError.toVector())
+
+    def onInput_onStop(self):
+        self.onUnload()]]>
+</content>
+                            </script>
+                            <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when Diagram is loaded." id="1" />
+                            <Input name="onStart" type="2" type_size="1" nature="2" inner="0" tooltip="Box behavior starts when a signal is received on this input." id="2" />
+                            <Input name="onStop" type="1" type_size="1" nature="3" inner="0" tooltip="Box behavior stops when a signal is received on this input." id="3" />
+                            <Output name="onArrivedAtDestination" type="1" type_size="1" nature="1" inner="0" tooltip="Signal sent when the robot arrives at its destination." id="4" />
+                            <Output name="onStoppedBeforeArriving" type="0" type_size="1" nature="1" inner="0" tooltip="Signal sent when the robot stops before arriving to its destination. Returns a vector [x (m), y (m), theta(rad)] with the remaining distance up to the destination. This distance is expressed in the ROBOT frame." id="5" />
+                            <Parameter name="Distance X (m)" inherits_from_parent="0" content_type="2" value="0.1" default_value="0.2" min="-5" max="10" tooltip="The distance in meters for forward/backward motion. Positive value&#x0A;means forward, negative value means backward." id="6" />
+                            <Parameter name="Distance Y (m)" inherits_from_parent="0" content_type="2" value="0" default_value="0" min="-5" max="5" tooltip="The distance in meters for lateral motion. Positive value means left, negative&#x0A;value means right." id="7" />
+                            <Parameter name="Theta (deg)" inherits_from_parent="0" content_type="2" value="0" default_value="0" min="-180" max="180" tooltip="The orientation in degrees for final rotation. Positive value means anticlockwise,&#x0A;negative value means clockwise." id="8" />
+                            <Parameter name="Arms movement enabled" inherits_from_parent="0" content_type="0" value="1" default_value="1" tooltip="Enables natural motion of the arms." id="9" />
+                            <Resource name="Legs" type="Lock" timeout="0" />
+                        </Box>
                         <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
                         <Link inputowner="0" indexofinput="4" outputowner="3" indexofoutput="4" />
                         <Link inputowner="1" indexofinput="2" outputowner="2" indexofoutput="4" />
@@ -670,6 +748,9 @@ class MyClass(GeneratedClass):
                         <Link inputowner="4" indexofinput="2" outputowner="8" indexofoutput="5" />
                         <Link inputowner="9" indexofinput="2" outputowner="5" indexofoutput="7" />
                         <Link inputowner="3" indexofinput="2" outputowner="9" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="11" indexofoutput="4" />
+                        <Link inputowner="4" indexofinput="2" outputowner="11" indexofoutput="5" />
+                        <Link inputowner="11" indexofinput="2" outputowner="5" indexofoutput="8" />
                     </Diagram>
                 </BehaviorKeyframe>
             </BehaviorLayer>
