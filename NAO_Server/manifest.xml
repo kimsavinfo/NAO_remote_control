@@ -4,10 +4,12 @@
   <name lang="en_US">NAO_Server</name>
  </names>
  <supportedLanguages>
+  <language>fr_FR</language>
   <language>en_US</language>
  </supportedLanguages>
  <descriptionLanguages>
   <language>en_US</language>
+  <language>fr_FR</language>
  </descriptionLanguages>
  <contents>
   <behaviorContent path="behavior_1">
