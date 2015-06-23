@@ -14,7 +14,7 @@
         <Timeline enable="0">
             <BehaviorLayer name="behavior_layer1">
                 <BehaviorKeyframe name="keyframe1" index="1">
-                    <Diagram scale="100">
+                    <Diagram scale="84.0896">
                         <Box name="WakeUp" id="2" localization="0" tooltip="Call a Wake Up process.&#x0A;Stiff all joints and apply stand Init posture if the robot is Stand" x="59" y="31">
                             <bitmap>media/images/box/movement/stiffness.png</bitmap>
                             <script language="4">
@@ -81,7 +81,7 @@
                             <Resource name="All motors" type="Lock" timeout="0" />
                             <Resource name="Stiffness" type="Lock" timeout="0" />
                         </Box>
-                        <Box name="SocketListener" id="4" localization="8" tooltip="Wait for an order given by a socket in the format 123#say#Hello World!$" x="121" y="250">
+                        <Box name="SocketListener" id="4" localization="8" tooltip="Wait for an order given by a socket in the format 123#say#Hello World!$" x="181" y="223">
                             <bitmap>media/images/box/box-python-script.png</bitmap>
                             <script language="4">
                                 <content>
@@ -258,7 +258,7 @@ class MyClass(GeneratedClass):
         # Recuperer :
         # UID = l id de l emetteur
         # Order = action que NAO effectuera
-        # parameters = optionnel selon l Osder
+        # parameters = optionnel selon l Order
         self.logger.info("UID :"+p[0]+", Order : "+p[1])
         uid=p[0]
         order=p[1]
