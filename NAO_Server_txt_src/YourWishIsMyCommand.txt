@@ -1,0 +1,41 @@
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #put initialization code here
+        pass
+
+    def onUnload(self):
+        #put clean-up code here
+        pass
+
+    def onInput_onStart(self, p):
+        # Recuperer :
+        # UID = l id de l emetteur
+        # Order = action que NAO effectuera
+        # parameters = optionnel selon l Order
+        self.logger.info("UID :"+p[0]+", Order : "+p[1])
+        uid=p[0]
+        order=p[1]
+
+        if order=="say":
+            self.logger.info("Param :"+p[2])
+            self.sayText(p[2])
+        if order=="sitDown":
+            self.sitDown()
+        if order=="standUp":
+            self.standUp()
+        if order=="walk":
+            self.logger.info("Param :"+p[2]+", "+p[3]+", "+p[4])
+            self.walk( [ float(p[2]), float(p[3]), float(p[4]) ] )
+
+        # Stopper l ecoute
+        if order=="goodbye":
+            self.goodbye()
+
+        pass
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.sayText(p) #activate the output of the box
